@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Kursus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Mengatur tema dasar ala Pixel UI / One UI */
+    body { 
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; 
+      background-color: #EEF2F6; 
+      padding: 20px; 
+      color: #1F1F1F;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container { 
+      width: 100%;
+      max-width: 600px; 
+      background: #FFFFFF; 
+      padding: 35px; 
+      border-radius: 28px; 
+      box-shadow: 0 8px 30px rgba(0,0,0,0.04); 
+    }
+
+    h2 { 
+      text-align: center; 
+      font-weight: 700; 
+      font-size: 26px; 
+      margin-top: 0;
+      margin-bottom: 30px; 
+      color: #1A1A1A; 
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-row { display: flex; gap: 15px; }
+    .form-row .form-group { flex: 1; margin-bottom: 0; }
+    
+    label { 
+      display: block; 
+      margin-bottom: 8px; 
+      font-weight: 500; 
+      color: #444746; 
+      font-size: 14px; 
+      padding-left: 4px;
+    }
+
+    input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea { 
+      width: 100%; 
+      padding: 16px; 
+      background-color: #F0F4F8; 
+      border: 2px solid transparent; 
+      border-radius: 16px; 
+      box-sizing: border-box; 
+      font-size: 15px; 
+      font-family: 'Outfit', sans-serif;
+      color: #1F1F1F;
+      transition: all 0.3s ease;
+    }
+
+    textarea { resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #0B57D0; 
+      background-color: #FFFFFF;
+    }
+
+    .radio-group { display: flex; gap: 15px; margin-top: 5px; }
+    .radio-group label { 
+      font-weight: 500; 
+      display: flex; 
+      align-items: center; 
+      cursor: pointer; 
+      background-color: #F0F4F8;
+      padding: 14px 20px;
+      border-radius: 100px;
+      flex: 1;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .radio-group label:hover { background-color: #E1E9F1; }
+    .radio-group input[type="radio"] { 
+      margin-right: 10px; 
+      accent-color: #0B57D0; 
+      width: 18px; 
+      height: 18px; 
+    }
+
+    button { 
+      width: 100%; 
+      padding: 18px; 
+      background-color: #0B57D0; 
+      color: white; 
+      border: none; 
+      border-radius: 100px; 
+      cursor: pointer; 
+      font-size: 16px; 
+      font-weight: 600; 
+      font-family: 'Outfit', sans-serif;
+      margin-top: 25px; 
+      transition: background-color 0.2s;
+    }
+    button:hover { background-color: #0842A0; }
+    button:disabled { background-color: #E0E0E0; color: #9E9E9E; cursor: not-allowed; }
+    
+    #message { 
+      margin-top: 20px; 
+      text-align: center; 
+      font-weight: 500; 
+      padding: 15px; 
+      border-radius: 16px; 
+      display: none; 
+      font-size: 15px;
+    }
+    .success { background-color: #C4EED0; color: #0D652D; }
+    .error { background-color: #F8D7DA; color: #721C24; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Pendaftaran Kursus</h2>
+    <form id="courseForm" onsubmit="event.preventDefault(); processForm();">
+      
+      <div class="form-group">
+        <label for="nik">NIK KTP</label>
+        <input type="number" id="nik" required placeholder="Masukkan 16 digit NIK">
+      </div>
+
+      <div class="form-group">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" required placeholder="Nama sesuai KTP/Ijazah">
+      </div>
+
+      <div class="form-group form-row">
+        <div class="form-group">
+          <label for="tempat_lahir">Tempat Lahir</label>
+          <input type="text" id="tempat_lahir" required placeholder="Kota kelahiran">
+        </div>
+        <div class="form-group">
+          <label for="tanggal_lahir">Tanggal Lahir</label>
+          <input type="date" id="tanggal_lahir" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="alamat">Alamat Lengkap</label>
+        <textarea id="alamat" rows="3" required placeholder="Jl. Raya..., RT/RW, Kelurahan, Kecamatan"></textarea>
+      </div>
+
+      <div class="form-group form-row">
+        <div class="form-group">
+          <label for="jk">Jenis Kelamin</label>
+          <select id="jk" required>
+            <option value="" disabled selected>Pilih Kelamin</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="agama">Agama</label>
+          <select id="agama" required>
+            <option value="" disabled selected>Pilih Agama</option>
+            <option value="Islam">Islam</option>
+            <option value="Kristen Protestan">Kristen Protestan</option>
+            <option value="Katolik">Katolik</option>
+            <option value="Hindu">Hindu</option>
+            <option value="Buddha">Buddha</option>
+            <option value="Konghucu">Konghucu</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="whatsapp">No. Handphone / WA Aktif</label>
+        <input type="number" id="whatsapp" required placeholder="Contoh: 08123456789">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Alamat Email</label>
+        <input type="email" id="email" required placeholder="email@contoh.com">
+      </div>
+
+      <div class="form-group">
+        <label for="program">Program Pilihan</label>
+        <select id="program" required>
+          <option value="" disabled selected>Pilih Program Kursus</option>
+          <option value="Microsoft Office Basic 12x Pertemuan">Microsoft Office Basic (12x Pertemuan)</option>
+          <option value="Microsoft Office Expert 26x Pertemuan">Microsoft Office Expert (26x Pertemuan)</option>
+          <option value="Desain Grafis 24x Pertemuan">Desain Grafis (24x Pertemuan)</option>
+          <option value="Teknisi Komputer dan Jaringan 18x Pertemuan">Teknisi Komputer dan Jaringan (18x Pertemuan)</option>
+          <option value="Web Programming 24x Pertemuan">Web Programming (24x Pertemuan)</option>
+          <option value="Digital Marketing Level 1 (Personal) 12x Pertemuan">Digital Marketing Level 1 (12x Pertemuan)</option>
+          <option value="Digital Marketing Level 2 (Corporate) 16x Pertemuan">Digital Marketing Level 2 (16x Pertemuan)</option>
+          <option value="Microsoft Office Word 18x Pertemuan">Microsoft Office Word (18x Pertemuan)</option>
+          <option value="Microsoft Office Excel 20x Pertemuan">Microsoft Office Excel (20x Pertemuan)</option>
+          <option value="Microsoft Office PowerPoint 6x Pertemuan">Microsoft Office PowerPoint (6x Pertemuan)</option>
+          <option value="Corel Draw 17x Pertemuan">Corel Draw (17x Pertemuan)</option>
+          <option value="Photoshop 7x Pertemuan">Photoshop (7x Pertemuan)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Pilihan Kelas</label>
+        <div class="radio-group">
+          <label><input type="radio" name="kelas" value="Reguler" required> Reguler</label>
+          <label><input type="radio" name="kelas" value="Private" required> Private</label>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn">Kirim Pendaftaran</button>
+    </form>
+    
+    <div id="message"></div>
+  </div>
+
+  <script>
+    // ===== PERHATIAN: GANTI TULISAN DI BAWAH INI DENGAN URL APPS SCRIPT ANDA =====
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxDUECG24hyUWuuHBr9nARQ68Iqa_M5nxrF2-2UtuuO8GUSkpl_NsUKwOAz3E0O2Dlr/exec';
+    // ==============================================================================
+
+    function processForm() {
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('message');
+      
+      btn.disabled = true;
+      btn.innerText = 'Memproses Data...';
+      msg.style.display = 'none';
+
+      const kelasRadios = document.getElementsByName('kelas');
+      let kelasTerpilih = '';
+      for (let i = 0; i < kelasRadios.length; i++) {
+        if (kelasRadios[i].checked) { kelasTerpilih = kelasRadios[i].value; break; }
+      }
+
+      const tLahir = document.getElementById('tempat_lahir').value;
+      const tglLahirMentah = document.getElementById('tanggal_lahir').value; 
+      const bagianTgl = tglLahirMentah.split('-');
+      const ttlGabungan = tLahir + ", " + bagianTgl[2] + "/" + bagianTgl[1] + "/" + bagianTgl[0];
+
+      const formData = new FormData();
+      formData.append('nik', document.getElementById('nik').value);
+      formData.append('nama', document.getElementById('nama').value);
+      formData.append('ttl', ttlGabungan);
+      formData.append('alamat', document.getElementById('alamat').value);
+      formData.append('jk', document.getElementById('jk').value);
+      formData.append('agama', document.getElementById('agama').value);
+      formData.append('whatsapp', document.getElementById('whatsapp').value);
+      formData.append('email', document.getElementById('email').value);
+      formData.append('program', document.getElementById('program').value);
+      formData.append('kelas', kelasTerpilih);
+
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => response.json())
+        .then(data => {
+          if (data.result === "success") {
+            msg.className = 'success';
+            msg.innerText = data.message;
+            document.getElementById('courseForm').reset();
+          } else {
+            msg.className = 'error';
+            msg.innerText = 'Terjadi kesalahan sistem: ' + data.message;
+          }
+          msg.style.display = 'block';
+          btn.disabled = false;
+          btn.innerText = 'Kirim Pendaftaran';
+        })
+        .catch(error => {
+          msg.className = 'error';
+          msg.innerText = 'Gagal terhubung ke server. Pastikan URL Apps Script sudah diisi dengan benar.';
+          msg.style.display = 'block';
+          btn.disabled = false;
+          btn.innerText = 'Kirim Pendaftaran';
+        });
+    }
+  </script>
+</body>
+
+</html>
+
+
